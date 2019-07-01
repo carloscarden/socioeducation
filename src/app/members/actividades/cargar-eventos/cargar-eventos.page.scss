@@ -1,0 +1,74 @@
+         /*HEADER*/
+.textoTitulo {
+	font-family:"DIN";
+}
+
+         /*TEXTO LABEL*/
+.textoBold {
+	font-weight:bold;
+  /*font-size:17px;*/
+  color:#454545;
+}
+
+        /*HORA INICIO Y HORA FIN Y TIPO espacioright reemplaza a textoBold*/
+.paddingcheck {
+  --padding-start:0;
+}   
+.espacioright {
+  padding-left:20px;
+  font-weight:bold;
+  color:#454545;
+}
+
+ion-select{
+  max-width: 40% !important;
+}
+
+
+
+        /*PADDING SELECCION*/
+.posicion {
+  padding-left:1rem;
+}
+
+.ppicker-opts {
+  background-color:red;
+}
+
+.itemImagen {
+  --inner-border-width:0;
+}
+
+         /*BOTON*/
+.itemBoton {
+  --inner-border-width:0;
+}
+
+.form-group {
+display:flex;
+  text-align:center;
+}
+
+.fileUpload {
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+
+.tipoBoton {
+  font-size: 14px;
+  font-weight:bold;
+  box-shadow: 2px 10px 22px -8px rgba(0,0,0,0.75);
+}
+
+        /*SOMBRA FAB*/
+.ion.fab.button{
+    box-shadow: 2px 10px 22px -8px rgba(0,0,0,0.75);
+}
+
+
+.sinborde {
+  border: 0;
+}
+
+

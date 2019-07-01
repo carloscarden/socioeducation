@@ -1,0 +1,128 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="end" (click)="cancel()">
+        <ion-icon name="close"></ion-icon>
+    </ion-buttons>
+    <ion-title class="textoTitulo" class="textoBold">Nuevo Evento</ion-title>
+  </ion-toolbar>
+</ion-header>
+<!--{{ diagnostic }}-->
+
+<ion-content>
+
+  
+    <div *ngIf="diaPermitido">
+  
+          <ion-item>
+            <ion-label position="stacked" class="textoBold" color="success">Actividad</ion-label>
+            <ionic-selectable class="fuente"
+              item-content
+              [(ngModel)]="evento.actividad"
+              name="eventoTipo"
+              itemValueField="codigo"
+              itemTextField="descripcion"
+              [items]="tiposTrabajos"
+              [canSearch]="true"
+              searchPlaceholder="buscar tipo"
+              (onSearch)="searchPorts($event)"
+              [searchFailText]="'No hay resultados.'"
+              (onChange)="verActividad()">
+              <ng-template ionicSelectableCloseButtonTemplate>
+                 <ion-icon name="close-circle" style="font-size: 24px;"></ion-icon>
+              </ng-template>
+            </ionic-selectable>
+          </ion-item>
+
+          <div *ngIf="quisoAgendarSinActividad && evento.actividad==null"  style="color:red;">
+              La actividad es requerida
+          </div>
+
+
+          <div *ngIf="esLicencia">
+              <ion-item>
+                <ion-label position="stacked" class="textoBold" color="success">Fecha de Inicio  </ion-label>
+                <ion-input [(ngModel)]="inicio"
+                           [liIonic4Datepicker]="datePickerObj"
+                           name="fechaInicio" 
+                           #fechaInicio="ngModel"
+                           (ionChange)="validarFechas()"> </ion-input>
+              </ion-item>
+              
+              <ion-item>
+                <ion-label position="stacked" class="textoBold" color="success">Fecha de Fin  </ion-label>
+                <ion-input [(ngModel)]="fin"
+                           [liIonic4Datepicker]="datePickerObj"
+                           name="fechaFin" 
+                           #fechaFin="ngModel"
+                           (ionChange)="validarFechas()"> </ion-input>
+              </ion-item>
+              
+              <div *ngIf="fechasNoValidas" >
+                  <ion-label color="danger">La fecha fin no debe de ser menor que la fecha de inicio </ion-label>
+              </div>
+
+              <div *ngIf="!diaCorrecto"  style="color:red;">
+                  <ion-label color="danger">La tarea no puede exceder el rango de 7 dias</ion-label> 
+              </div>
+          </div>
+              
+              
+              
+        <div *ngIf="noSonLicencias">
+              <ion-item>
+                <ion-label position="stacked" class="textoBold" color="success">Fecha</ion-label>
+                <ion-input [(ngModel)]="fecha"
+                           [liIonic4Datepicker]="datePickerObj"
+                           name="inicio" 
+                           #inicio="ngModel"
+                          (ionChange)="validarDiaCorrectoDeLasOtrasActividades()"> </ion-input>
+               </ion-item>
+                  
+               <div *ngIf="!diaCorrecto"  style="color:red;">
+                    La tarea no puede exceder el rango de 7 dias
+                </div>
+                  
+                  
+               <ion-item>
+                    <ion-label position="stacked" class="textoBold" color="success">Hora Inicio </ion-label>
+                    <input [ngxTimepicker]="picker"  [(ngModel)]="horaInicio"  cancelBtnTmpl="cancelar"   class="native-input sc-ion-input-md" name="hInicio">
+                    <ngx-material-timepicker #picker></ngx-material-timepicker>
+                   
+               </ion-item>
+                  
+               <ion-item>
+                    <ion-label position="stacked" class="textoBold" color="success">Hora Fin </ion-label>
+                    <input [ngxTimepicker]="picker2"  [(ngModel)]="horaFin"   cancelBtnTmpl="cancelar"   class="native-input sc-ion-input-md" name="hInicio">
+                    <ngx-material-timepicker #picker2></ngx-material-timepicker>
+                </ion-item>
+                  
+                <div *ngIf="horasNoValidas"  style="color:red;">
+                   La fecha fin no debe de ser menor que la fecha de inicio
+                </div>
+        </div>
+
+        <ion-item>
+            <ion-label position="stacked" class="textoBold" color="success">Detalles de la tarea</ion-label>
+            <ion-input class="fuente" type="text" [(ngModel)]="evento.detalle"></ion-input>
+        </ion-item>
+
+              
+
+    
+               
+
+      <div class="centrarBoton">
+          <ion-button ion-button full color="primary" class="sombra" (click)="save()">AGENDAR</ion-button>
+      </div>
+
+    </div>
+
+    <div *ngIf="!diaPermitido" class="centrarBoton">
+      <hr>
+      <hr>
+      <h1> El d&iacute;a viernes es solo el permitido para cargar la agenda </h1>
+    </div>
+ 
+
+
+</ion-content>

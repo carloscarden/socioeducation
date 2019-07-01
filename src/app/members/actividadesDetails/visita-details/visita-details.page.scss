@@ -1,0 +1,48 @@
+/*.listado {
+	margin:0;
+	padding:0;
+}*/
+
+/*.label {
+	margin:0;
+}*/
+
+.itemBoton {
+  --inner-border-width:0;
+  /*--padding-start:0;*/
+}
+
+.textoDetalle {
+  font-weight:bold;
+  font-size:14px;
+  color:#9aca3c;
+}
+
+.infoDetalle {
+  padding-left:16px;
+}
+
+.tituloArch {
+  font-size:18px;
+  color:#0476af;
+  margin-top:15px;
+  margin-bottom:5px;
+}
+
+.itemImagen {
+  --inner-border-width:0;
+}
+
+.conflict {
+  text-align:center;
+ /* border-style:solid;
+  border-width:1px 1px 1px 1px;
+  --border-width:1px;
+  border-color:#9aca3c;
+  padding:2px;*/
+}
+
+.sitconfli {
+  color:#b50f68;
+  font-weight:bold;
+}

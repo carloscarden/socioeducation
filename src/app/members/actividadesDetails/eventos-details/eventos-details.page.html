@@ -1,0 +1,55 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title class="textoTitulo">Detalles del evento</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+
+
+        <ion-list margin-top class="listado">
+                <ion-item-sliding *ngFor="let item of convocatoria">
+                  <ion-item class="itemBoton" lines="inset" >
+                    <ion-label class="label">
+                     
+                          <p class="textoDetalle">Tipo</p>
+                          <p class="infoDetalle">{{ item.tipoConvocatoria.descripcion }}</p>
+                          <p class="textoDetalle">Inicio</p>
+                          <p class="infoDetalle">{{ stringAsDate(item.inicio) | date:'fullDate' }} {{ hora(item.inicio)}}</p>
+                          <p class="textoDetalle">Fin</p>
+                          <p class="infoDetalle">{{ stringAsDate(item.fin) | date:'fullDate' }} {{ hora(item.fin)}}</p>
+                          <p class="textoDetalle">Distrito</p>
+                          <p class="infoDetalle">{{ item.distrito.descripcion }}</p> 
+                          <p class="textoDetalle">Lugar</p>
+                          <p>{{ item.lugar }}</p>
+
+                      <ion-list>
+                        <hr>
+                        <h3 class="tituloArch">ARCHIVOS</h3>
+                        <hr>
+                        <ion-item class="itemImagen" *ngFor="let img of item.adjuntos; index as pos" text-wrap>
+                            
+                            <div *ngIf="!(esUnaImagen(img.tipo))" class="invalid-feedback">
+                                {{img.nombre}}
+                            </div>
+                            
+                            <div *ngIf="(esUnaImagen(img.tipo))" class="invalid-feedback">
+                              <ion-thumbnail slot="start"> 
+                                 <ion-img [src]="'data:'+img.tipo+';base64,'+img.archivo"></ion-img>
+                              </ion-thumbnail>
+                            </div>
+
+                        </ion-item> 
+                      </ion-list>
+                    </ion-label>
+                  </ion-item>
+                </ion-item-sliding>
+        </ion-list>
+
+
+
+
+</ion-content>

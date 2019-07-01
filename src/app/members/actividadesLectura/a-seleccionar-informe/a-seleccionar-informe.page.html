@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title class="textoTitulo">Informes</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+ <ion-grid>
+    <ion-row>
+      <ion-col> 
+
+        <ion-item class="listado">
+           <ion-label position="stacked" class="textoBold" color="success">Seleccionar actividad</ion-label>
+           <ion-select  class="fuente" (ionChange)="onChange($event)" okText="Aceptar" cancelText="Cancelar" [(ngModel)]="url">
+              <ion-select-option *ngFor="let opt of opciones">{{opt}}</ion-select-option>
+           </ion-select>
+        </ion-item>
+
+  <router-outlet></router-outlet>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+

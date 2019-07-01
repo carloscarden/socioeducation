@@ -1,0 +1,14 @@
+{
+  "name": "devdacticLogin",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular",
+  "id": "1cbf5127",
+  "proxies": [
+    {
+      "path": "/api",
+      "proxyUrl": "http://test2.abc.gov.ar:8080/InspectoresApp/"
+    }
+  ]
+}

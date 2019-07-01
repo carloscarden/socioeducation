@@ -1,0 +1,35 @@
+<ion-split-pane>
+  
+  <ion-menu contentId="content">
+    <ion-header>
+      <ion-toolbar color="primary">
+        <ion-buttons slot="start">
+          <ion-back-button></ion-back-button>
+        </ion-buttons>
+        <ion-title class="textoTitulo">Men&uacute;</ion-title>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content>
+        <ion-list>
+          <ion-menu-toggle auto-hide="false">
+            <ion-item class="textoBold" (click)="openAgenda('second')" >
+                 Calendario
+            </ion-item>
+            <ion-item class="textoBold" (click)="openActividades('principal')" >
+                Actividades
+            </ion-item>
+            <ion-item class="textoBold" (click)="openInformes('second')" >
+                Informes
+           </ion-item>
+           <ion-item class="textoBold" (click)="logout()" >
+                Salir
+           </ion-item>
+          </ion-menu-toggle>
+        </ion-list>
+      </ion-content>
+    
+  </ion-menu>
+
+  <ion-router-outlet id="content" main></ion-router-outlet>
+</ion-split-pane>

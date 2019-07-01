@@ -1,0 +1,58 @@
+<ion-header>
+    <ion-toolbar color="primary">
+      <ion-buttons slot="start">
+        <ion-back-button></ion-back-button>
+      </ion-buttons>
+      <ion-title class="textoTitulo">Detalles de la Visita</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+<ion-content padding>
+
+    <ion-list margin-top class="listado">
+        <ion-item-sliding *ngFor="let item of visitaEscuela">
+          <ion-item class="itemBoton" lines="inset">
+            <ion-label class="label">
+              
+                    <p class="textoDetalle">Lugar:</p> 
+                    <p class="infoDetalle">{{ item.establecimiento.nombre }}</p>
+                    <p class="textoDetalle">Inicio</p>  
+                    <p class="infoDetalle">{{ stringAsDate(item.inicio) | date:'fullDate' }}  {{ hora(item.inicio)}}</p>
+                    <p class="textoDetalle">Fin</p>
+                    <p class="infoDetalle">{{ stringAsDate(item.fin) | date:'fullDate' }}  {{ hora(item.fin)}}</p>
+                    <p class="textoDetalle">Descrip.:</p>  
+                    <p class="infoDetalle">{{ item.motivo.descripcion}}</p>
+                    <p class="textoDetalle">Observaciones:</p>
+                    <p class="infoDetalle">{{ item.observaciones}}</p>    
+                    <hr>
+                    
+              <div class="conflict" *ngIf="item.urgente=='T'" >
+                  <p class="sitconfli" > SITUACION DE CONFLICTO </p>
+              </div>
+
+              <ion-list>
+                  <h3 class="tituloArch">ARCHIVOS</h3>
+                  <ion-item class="itemImagen" *ngFor="let img of item.adjuntos; index as pos" text-wrap>
+                      
+                      <div *ngIf="!(esUnaImagen(img.tipo))" class="invalid-feedback">
+                          {{img.nombre}}
+                      </div>
+                      
+                      <div *ngIf="(esUnaImagen(img.tipo))" class="invalid-feedback">
+                        <ion-thumbnail slot="start"> 
+                           <ion-img [src]="'data:'+img.tipo+';base64,'+img.archivo"></ion-img>
+                        </ion-thumbnail>
+                      </div>
+                     <!--
+                      <ion-button slot="end" fill="clear" (click)="deleteImageWeb(pos)">
+                          <ion-icon slot="icon-only" name="trash"></ion-icon>
+                      </ion-button>-->
+                  </ion-item> 
+              </ion-list>
+
+            </ion-label>
+          </ion-item>
+        </ion-item-sliding>
+      </ion-list>
+
+</ion-content>

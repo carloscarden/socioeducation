@@ -1,0 +1,72 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title class="textoTitulo"><strong>Buenos Aires</strong> Provincia</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<hr>
+<hr>
+
+<ion-content padding>
+
+    
+  
+  <ion-grid class="anchoLogo">
+    <ion-row>
+      
+      <ion-col size="6">  	
+        <div class="logo">
+            <ion-img src="../../assets/img/LogoAppInspectores.png"></ion-img>
+        </div>   
+      </ion-col>
+
+      <ion-col size="6">
+        <div class="titulo">
+          <h4 class="supervision">Supervisi&oacute;n</h4>
+          <h4 class="educativa">Educativa</h4>
+        </div>
+      </ion-col>
+
+    </ion-row>
+  </ion-grid>      
+
+<hr>
+
+  <ion-grid class="anchoForm">
+    <ion-row>
+
+      <!--<ion-col size=none size-md="3"></ion-col> CENTRAR WEB-->
+
+      <ion-col>  <!--size-md="6" para web-->
+          <form [formGroup]="loginForm" (submit)="onSubmit()">
+              <ion-item>
+                <ion-label position="stacked" class="textoBold" color="success">Usuario</ion-label>
+                 <ion-input class="fuente" type="mail" formControlName="username" [ngClass]="{ 'is-invalid': submitted && f.username.errors }"></ion-input>
+                 <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
+                    <div *ngIf="f.username.errors.required">El usuario es requerido</div>
+                 </div>
+              </ion-item>
+              <ion-item>
+                <ion-label position="stacked" class="textoBold" color="success">Contraseña</ion-label>
+                 <ion-input class="fuente" type="password" formControlName="password" [ngClass]="{ 'is-invalid': submitted && f.password.errors }"></ion-input>
+                 <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                    <div *ngIf="f.password.errors.required">La contrase&ntilde;a es requerida</div>
+                 </div>
+              </ion-item>
+              <hr>
+              <hr>
+              <hr>
+              <hr>
+              <div class="form-group">
+                <ion-button class="tipoBoton" type="submit" [disabled]="loading">ENTRAR</ion-button>
+                <img *ngIf="loading" class="pl-2" src="" />
+              </div>
+
+              <div class="textoBold" color="success" *ngIf="error" class="alert alert-danger">{{error}}</div>
+          </form>        
+     </ion-col>
+    </ion-row>
+  </ion-grid>    
+
+</ion-content>
+

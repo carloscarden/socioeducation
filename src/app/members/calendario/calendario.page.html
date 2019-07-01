@@ -1,0 +1,92 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title class="textoTitulo">Agenda</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding class="bkagenda">
+       
+
+<ion-item class="busquedaPrimera">
+  <ion-label position="stacked" class="textoBold" color="success">Seleccionar mes</ion-label>
+  <ion-select   okText="Aceptar" cancelText="Cancelar" [(ngModel)]="mesAbuscar" (ionChange)="filtrar()">
+    <ion-select-option value="todos">Todos los meses</ion-select-option>
+    <ion-select-option *ngFor="let opt of nombreMeses; index as pos" value="{{pos}}">{{opt}}</ion-select-option>
+  </ion-select>
+</ion-item>
+<ion-item class="busquedaSegunda">
+  <ion-label position="stacked" class="textoBold" color="success">Seleccionar a&ntilde;o</ion-label>
+  <ion-input class="fuente" type="number"  [(ngModel)]="anio" min="2019" max="2100" (ionChange)="filtrar()"></ion-input>
+</ion-item>
+
+ <p class="areaAnio">Tareas del {{anioBuscado}}</p>
+
+{{ ordenar() }}
+
+<div *ngFor ="let tareasMeses of mesesCargados">
+        <h2 class="areaMes">{{ tareasMeses.nombreMes }}</h2>
+
+    <div  *ngIf="tareasMeses.tareas.length==0" class="centrarResultado">
+        <ion-label class="textoBold" color="success"> No hay resultados</ion-label>
+    </div>
+
+   <ion-list margin-top class="listado">
+      <ion-item-sliding *ngFor="let tarea of tareasMeses.tareas">
+          <ion-item class="itemBoton" lines="inset" button (click)="mostrarTarea(tarea)">
+            <ion-label class="label">
+               <ion-grid>
+                 <ion-row>
+                  <ion-col size="3">
+                    <p class="textoBold">TAREA</p> 
+                    <p class="textoBold">Inicio</p>   
+                    <p class="textoBold">Fin</p>      
+                  </ion-col>
+                  <ion-col size="9">
+                    <p>{{tarea.actividad.descripcion}}</p>
+                    <p>{{ stringAsDate(tarea.inicio) | date:'fullDate' }} {{ hora(tarea.inicio)}}</p>
+                    <p>{{ stringAsDate(tarea.fin) | date:'fullDate' }} {{ hora(tarea.fin)}}</p> 
+                  </ion-col>
+                 </ion-row>
+                </ion-grid>  
+            </ion-label>
+          </ion-item>
+      </ion-item-sliding>
+  </ion-list>
+</div>
+
+<ion-infinite-scroll (ionInfinite)="loadMore($event)" loadingSpinner="bubbles" loadingText="Cargando Tareas..."  distance="2%" threshold="10px" >
+    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+ </ion-infinite-scroll>
+</ion-content>
+
+
+<ion-footer>
+  <ion-tab-bar slot="bottom">
+
+    <ion-tab-button tab="month" (click)="changeMode('month')">
+      <ion-icon name="apps"></ion-icon>
+      <ion-label>Mes</ion-label>
+    </ion-tab-button>
+   
+    <ion-tab-button tab="week" (click)="changeMode('week')">
+         <ion-icon name="calendar"></ion-icon>
+         <ion-label>Semana</ion-label>
+    </ion-tab-button>
+    
+    <ion-tab-button tab="day" (click)="changeMode('day')">
+      <ion-icon name="clock"></ion-icon>
+      <ion-label>D&iacute;a</ion-label>
+    </ion-tab-button>
+
+     <ion-tab-button tab="add" (click)="addEvent()">
+         <ion-icon name="add-circle"></ion-icon>
+         <ion-label>Nuevo</ion-label>
+     </ion-tab-button>
+ 
+ 
+   </ion-tab-bar>
+
+</ion-footer>  

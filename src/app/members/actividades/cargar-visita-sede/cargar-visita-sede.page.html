@@ -1,0 +1,168 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title class="textoTitulo">Visita a Sede</ion-title>
+  </ion-toolbar>
+</ion-header>
+<!--{{ diagnostic }}-->
+<ion-content padding>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+  
+       <form #visitaForm="ngForm"  (ngSubmit)="onSubmit()">
+
+        
+          <ion-item>
+              <ion-label position="stacked" class="textoBold" color="success">Fecha (*)</ion-label>
+              <ion-input [(ngModel)]="visita.inicio" [liIonic4Datepicker]="datePickerObj" name="inicio" #inicio="ngModel" required> </ion-input>
+              <div *ngIf="!(inicio.valid || inicio.pristine)" class="invalid-feedback">
+                  La fecha de inicio es requerida
+              </div>
+          </ion-item>
+
+
+
+          <ion-item class="paddingcheck">
+              <ion-label  position="stacked" class="espacioright" color="success">Hora Inicio  (*)</ion-label>
+              <input [ngxTimepicker]="picker" [(ngModel)]="horaInicio" cancelBtnTmpl="cancelar"  class="native-input sc-ion-input-md" name="hInicio"  #hInicio="ngModel" (change)="validarHoras()" required>
+              <ngx-material-timepicker #picker></ngx-material-timepicker>
+              <div *ngIf="!(hInicio.valid || hInicio.pristine)" class="invalid-feedback">
+                  La hora de inicio es requerida
+              </div>
+          </ion-item>
+    
+      
+          <ion-item class="paddingcheck">
+              <ion-label  position="stacked" class="espacioright" color="success">Hora fin  (*)</ion-label>
+              <input [ngxTimepicker]="picker2" [(ngModel)]="horaFin" cancelBtnTmpl="cancelar"  class="native-input sc-ion-input-md" name="hFin"  #hFin="ngModel" (change)="validarHoras()" required>
+              <ngx-material-timepicker #picker2></ngx-material-timepicker>
+              <div *ngIf="!(hFin.valid || hFin.pristine)" class="invalid-feedback">
+                  La hora de fin es requerida
+              </div>
+          </ion-item>
+
+        
+
+          <div *ngIf="horasNoValidas"  style="color:red;">
+            La hora fin no debe de ser menor que la hora de inicio
+          </div>
+          
+          
+           <ion-item>
+            <ion-label position="stacked" class="textoBold" color="success">CUE  (*)</ion-label>           
+            
+            <ionic-selectable class="fuente"
+                item-content
+                [(ngModel)]="visita.establecimiento"
+                name="estab"
+                itemTextField="cue"
+                [items]="establecimientos"
+                [canSearch]="true"
+                searchPlaceholder="buscar tipo establecimiento"
+                [searchFailText]="'No hay resultados.'"
+                [hasInfiniteScroll]="true"
+                (onSearch)="searchEstabs($event)"
+                (onInfiniteScroll)="getMoreEstabs($event)"
+                required>
+                <ng-template ionicSelectableCloseButtonTemplate>
+                    <ion-icon name="close-circle" style="font-size: 24px;"></ion-icon>
+                </ng-template>
+            </ionic-selectable>
+            <ion-note position="stacked" class="textoBold" color="success">{{visita.establecimiento.nombre}}</ion-note>
+            <hr>
+          </ion-item>
+          
+          
+          <ion-item>
+             <ion-label position="stacked" class="textoBold" color="success">Clima de trabajo (1 es el valor más bajo y 5 es el más alto) (*) </ion-label>
+             <ion-select value="brown" [(ngModel)]="visita.motivo" okText="Aceptar" cancelText="Cancelar" name="clima"  #clima="ngModel">
+                <ion-select-option value="1">1</ion-select-option>
+                <ion-select-option value="2">2</ion-select-option>
+                <ion-select-option value="3">3</ion-select-option>
+                <ion-select-option value="4">4</ion-select-option>
+                <ion-select-option value="5">5</ion-select-option>
+             </ion-select>  
+             <div *ngIf="!(hFin.valid || hFin.pristine)" class="invalid-feedback">
+              La hora de fin es requerida
+             </div>
+          </ion-item> 
+          
+          
+          <ion-item>
+            <ion-label position="stacked" class="textoBold" color="success">Observaciones</ion-label>
+            <ion-input class="fuente" type="text" [(ngModel)]="visita.observaciones" name="observaciones" #observaciones="ngModel"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked" class="textoBold" color="success">Inspector Acompa&ntilde;ante</ion-label>
+            <ion-input class="fuente" type="text" [(ngModel)]="visita.acompaniante" name="acompaniante" #acompaniante="ngModel"></ion-input>
+          </ion-item>
+
+          <ion-item class="paddingcheck">
+            <ion-label class="paddinglabel" color="success" >Situaci&oacute;n de alerta</ion-label>
+            <ion-checkbox checked="true" [(ngModel)]="conflicto" name="urg"></ion-checkbox>
+          </ion-item>
+         
+
+
+    <!-- **********************************  Para plataformas web  ********************************************************************** -->
+    
+      <hr>
+         <!--<div class="posicion">
+          <ion-label position="stacked" class="textoBold" color="success" *ngIf="imagesWeb.length == 0">No hay im&aacute;genes seleccionadas</ion-label>
+        </div>-->
+          <ion-list>
+            <ion-item class="itemImagen" *ngFor="let img of imagesWeb; index as pos" text-wrap>
+              <div *ngIf="!(esUnaImagen(img.tipo))" class="invalid-feedback">
+                    {{img.nombre}}
+              </div>
+             
+              <div *ngIf="(esUnaImagen(img.tipo))" class="invalid-feedback">
+                <ion-thumbnail slot="start">  
+                  <ion-img [src]="img.archivo"></ion-img>
+                </ion-thumbnail>
+              </div>    
+
+              <ion-button slot="end" fill="clear" (click)="deleteImageWeb(pos)">
+                <ion-icon slot="icon-only" name="trash"></ion-icon>
+              </ion-button>
+            </ion-item> 
+          </ion-list>
+
+          <ion-item class="itemBoton"> 
+            <div class="centerb" class="fileUpload btn btn-primary">       
+             <input type="file" id="fileLoader" #fileLoader name="files" title="Load File" accept="image/*,application/pdf" hidden />
+             <ion-button class="tipoBoton" (click)="changeListener(fileLoader)">
+                  Seleccionar archivos
+             </ion-button>
+            </div>
+          </ion-item>  
+    <!-- ******************************************************************************************************** -->
+             
+     <!-- <div class="form-group">
+            <img *ngIf="loading" class="pl-2" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" /> 
+          </div> -->
+        
+
+
+          <hr>
+          <hr>
+          <hr>
+
+          <ion-fab horizontal="end" >
+            <ion-fab-button color="tertiary" [disabled]="!(visitaForm.form.valid  && !horasNoValidas) ">
+                <ion-icon name="checkmark" style="position: absolute;left: 32%; text-align: center"></ion-icon>
+                <ion-button fill="clear" class="centerGroup" type="submit" [disabled]="!(visitaForm.form.valid  && !horasNoValidas) " color="tertiary"> </ion-button>
+            </ion-fab-button>
+            <hr>
+          </ion-fab> 
+       </form>  
+    </ion-col>
+  </ion-row>
+ </ion-grid>   
+       
+</ion-content>
+

@@ -1,0 +1,79 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button>
+      </ion-menu-button>
+    </ion-buttons>
+    <ion-title class="textoTitulo">Calendario</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-header>
+  <ion-toolbar color="secondary">
+      <ion-title class="mes">{{viewTitle}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content >
+  <calendar [monthviewDisplayEventTemplate]="template"
+            [eventSource]="eventSource"
+            [calendarMode]="calendar.mode"
+            [currentDate]="calendar.currentDate"
+            (onCurrentDateChanged)="onCurrentDateChanged($event)"
+            (onEventSelected)="onEventSelected($event)"
+            (onTitleChanged)="onViewTitleChanged($event)"
+
+            step="30"
+            class="dia">
+  </calendar>
+</ion-content>
+
+
+<ion-footer>
+        <ion-tab-bar slot="bottom">
+         <ion-tab-button tab="today" [disabled]="isToday" (click)="today()">
+          <ion-icon name="today"></ion-icon>
+          <ion-label>Hoy</ion-label>
+         </ion-tab-button>
+
+        <ion-tab-button tab="month" (click)="changeMode('month')">
+          <ion-icon name="apps"></ion-icon>
+          <ion-label>Mes</ion-label>
+        </ion-tab-button> 
+        
+        <ion-tab-button tab="week" (click)="changeMode('week')">
+          <ion-icon name="calendar"></ion-icon>
+          <ion-label>Semana</ion-label>
+        </ion-tab-button>
+        
+        <ion-tab-button tab="day" (click)="changeMode('day')">
+          <ion-icon name="clock"></ion-icon>
+          <ion-label>D&iacute;a</ion-label>
+        </ion-tab-button> 
+
+        <ion-tab-button tab="about" (click)="cargarCalendario()" >
+          <ion-icon name="book"></ion-icon>
+          <ion-label>Agenda</ion-label>
+        </ion-tab-button>
+        
+      
+        
+            <ion-tab-button tab="add" (click)="addEvent()">
+              <ion-icon name="add-circle"></ion-icon>
+              <ion-label>Nuevo</ion-label>
+            </ion-tab-button>
+      
+      
+        </ion-tab-bar>
+
+        
+
+        
+   
+</ion-footer>  
+
+  
+ 
+
+ 

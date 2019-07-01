@@ -1,0 +1,48 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button>
+      </ion-menu-button>
+    </ion-buttons>
+    <ion-title class="textoTitulo">Actividades</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+        <hr>
+        <hr>
+        <hr>
+        <hr>
+        <hr>
+        <hr>
+        <hr>
+       
+
+  <ion-grid>
+    <ion-row>
+      <!--<ion-col size=none size-md="3"></ion-col> RESPONSIVE WEB-->
+      <ion-col col-12>  <!--size-md="6" RESPONSIVE WEB-->
+        <h3 class="titulo1">SELECCIONAR ACTIVIDAD</h3>
+        <hr>
+        <ion-button expand="block" class="botonActividad" routerLink="/members/menu/actividad/cargarVisita">
+          Visita sede
+          <ion-icon slot="end" name="arrow-dropright"></ion-icon>
+        </ion-button>
+        <ion-button expand="block" class="botonActividad" routerLink="/members/menu/actividad/cargarGestionTerritorial">
+          Gesti&oacute;n territorial
+          <ion-icon slot="end" name="arrow-dropright"></ion-icon>
+        </ion-button>
+        <ion-button expand="block" class="botonActividad" routerLink="/members/menu/actividad/cargarEventos">
+          Eventos
+          <ion-icon slot="end" name="arrow-dropright"></ion-icon>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>      
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar color="primary">
+    <ion-title class="textoFooter"><strong>Buenos Aires</strong> Provincia</ion-title>
+  </ion-toolbar>
+</ion-footer>
