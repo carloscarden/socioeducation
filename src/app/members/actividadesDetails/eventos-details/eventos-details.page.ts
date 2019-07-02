@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 
-import { ConvocatoriaServiceService } from '../../../_services/convocatoria-service.service';
+import { EventoServiceService } from '../../../_services/evento-service.service';
 import { AuthenticationService } from '../../../_services/authentication.service';
 
 
@@ -16,11 +16,11 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class EventosDetailsPage implements OnInit {
   idInspector=1;
-  convocatoria;
+  evento;
   
 
   constructor(
-    private convocatoriaService: ConvocatoriaServiceService,
+    private convocatoriaService: EventoServiceService,
     private authenticationService: AuthenticationService,
     private route: ActivatedRoute) {
      
@@ -34,9 +34,9 @@ export class EventosDetailsPage implements OnInit {
     console.log(idConvocatoria);
     let currentUser = this.authenticationService.currentUserValue;
     this.idInspector= currentUser.id;
-    this.convocatoriaService.getConvocatoria(idConvocatoria,this.idInspector) .subscribe(res  =>{
+    this.convocatoriaService.getEvento(idConvocatoria,this.idInspector) .subscribe(res  =>{
       console.log(res);
-      this.convocatoria=[res];
+      this.evento=[res];
 
      }  
     );;

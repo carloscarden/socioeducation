@@ -8,7 +8,7 @@ import { Observable, of } from 'rxjs';
 import 'rxjs/add/observable/fromPromise';
 
 
-import { Convocatoria }  from '../_models/convocatoria';
+import { Evento }  from '../_models/evento';
 import { Platform } from '@ionic/angular'
 
 
@@ -18,7 +18,7 @@ const URL = `http://test2.abc.gov.ar:8080/InspectoresAppSec/`;
 @Injectable({
   providedIn: 'root'
 })
-export class ConvocatoriaServiceService {
+export class EventoServiceService {
 
   basepath="/api";
  
@@ -32,7 +32,7 @@ export class ConvocatoriaServiceService {
         }
   }
 
-  getAllConvocatorias(idInspector, inicio, fin, codigo){
+  getAllEventos(idInspector, inicio, fin, codigo){
 
       let urlAenviar = URL+`inspectores/${idInspector}/convocatorias`;
 
@@ -58,7 +58,7 @@ export class ConvocatoriaServiceService {
 
   }
 
-  getConvocatoriasBySize(idInspector, inicio, fin, articulo,size,page): Observable<any>{
+  getEventosBySize(idInspector, inicio, fin, articulo,size,page): Observable<any>{
             console.log("pasa por aca");
             console.log("id inspector",idInspector,"incio", inicio,"fin", fin, "articulo",articulo,"size",size,"page",page);
 
@@ -87,24 +87,24 @@ export class ConvocatoriaServiceService {
 
 
   /*  CONVOCATORIA CRUD */
-  addConvocatoria(convocatoria: Convocatoria) {
+  addEvento(convocatoria: Evento) {
       return this.http.post<any>(URL+`convocatorias`,  convocatoria );
   }
       
-  getConvocatorias(size,page,idInspector): Observable<any> {
+  getEventos(size,page,idInspector): Observable<any> {
      /* console.log("url");
      console.log(URL+`convocatorias?size=${size}&page=${page}`);*/
      console.log(URL+`inspectores/${idInspector}/convocatorias?size=${size}&page=${page}&sort=ASC`);
      return this.http.get<any>(URL+`inspectores/${idInspector}/convocatorias?size=${size}&page=${page}&sort=ASC`);
   }
       
-  getConvocatoriasByDate(size,page,idInspector, inicio, fin): Observable<any> {
+  getEventosByDate(size,page,idInspector, inicio, fin): Observable<any> {
      /* console.log("url");
      console.log(URL+`convocatorias?size=${size}&page=${page}`);*/
      return this.http.get<any>(URL+`inspectores/${idInspector}/convocatorias?from=${inicio}&to=${fin}&size=${size}&page=${page}&sort=ASC`);
   }
 
-  getConvocatoriasByArticulo(size,page,idInspector, articulo): Observable<any> {
+  getEventosByArticulo(size,page,idInspector, articulo): Observable<any> {
    /* console.log("url");
    console.log(URL+`convocatorias?size=${size}&page=${page}`);*/
 
@@ -113,19 +113,19 @@ export class ConvocatoriaServiceService {
 }
 
 
-  getConvocatoriasByArticuloAndDate(size,page,idInspector, inicio, fin, articulo): Observable<any> {
+  getEventosByArticuloAndDate(size,page,idInspector, inicio, fin, articulo): Observable<any> {
    /* console.log("url");
    console.log(URL+`convocatorias?size=${size}&page=${page}`);*/
    return this.http.get<any>(URL+`inspectores/${idInspector}/convocatorias?codigo=${articulo}&from=${inicio}&to=${fin}&size=${size}&page=${page}&sort=ASC`);
 }
       
-  getConvocatoria(idConvocatoria,idInspector): Observable<any> {
+  getEvento(idConvocatoria,idInspector): Observable<any> {
      /* console.log("url");
      console.log(URL+`convocatorias?size=${size}&page=${page}`);*/
      return this.http.get<any>(URL+`inspectores/${idInspector}/convocatorias/${idConvocatoria}`);
   }
       
-  getTipoConvocatorias(): Observable<any>{
+  getTipoEventos(): Observable<any>{
      return this.http.get(URL+`tiposConvocatoria/all`);
   }
       

@@ -12,14 +12,14 @@ import { ToastController, Platform, AlertController } from '@ionic/angular';
 
 
 /*  SERVICES */
-import { ConvocatoriaServiceService } from '../../../_services/convocatoria-service.service';
+import { EventoServiceService } from '../../../_services/evento-service.service';
 import { ActividadesService } from '../../../_services/actividades.service';
 import { AuthenticationService } from '../../../_services/authentication.service';
 
 
 /*  MODELOS */
-import { Convocatoria } from '../../../_models/convocatoria';
-import { TipoConvocatoria } from '../../../_models/tipo-convocatoria';
+import { Evento } from '../../../_models/evento';
+import { TipoEvento } from '../../../_models/tipo-evento';
 import { Imagen } from '../../../_models/imagen';
 import { Distrito } from 'src/app/_models/distrito';
 
@@ -32,9 +32,9 @@ import { Distrito } from 'src/app/_models/distrito';
   styleUrls: ['./cargar-eventos.page.scss'],
 })
 export class CargarEventosPage implements OnInit {
-  convocatoria = new Convocatoria();
+  evento = new Evento();
   
-  tiposConvocatorias: TipoConvocatoria[];
+  tiposEventos: TipoEvento[];
  
   actividadesSubscription: Subscription;
  
@@ -102,7 +102,7 @@ export class CargarEventosPage implements OnInit {
 
     private authenticationService: AuthenticationService,
     private actividadesService: ActividadesService,
-    private convocatoriaService: ConvocatoriaServiceService,
+    private convocatoriaService: EventoServiceService,
     private alertCtrl: AlertController
   ) { 
     this.actividadesService.getDistritos(this.distritoAfiltrar,this.size,this.pageDistrito).subscribe(
@@ -117,7 +117,7 @@ export class CargarEventosPage implements OnInit {
   ngOnInit() {
     /* id del inspector */
    
-    this.convocatoria.inicio=null;
+    this.evento.inicio=null;
   }
 
   async presentAlert(msj) {
@@ -144,32 +144,32 @@ export class CargarEventosPage implements OnInit {
     this.imagesWeb=[];
 
     // agrego las imagenes con el formato correcto
-    this.convocatoria.adjuntos=imgsConvertidas;
+    this.evento.adjuntos=imgsConvertidas;
 
     
 
     /****************************************************************************** */
 
     /* formato correcto del dia mes y año */
-    let inicio=this.convocatoria.inicio.split("-");
+    let inicio=this.evento.inicio.split("-");
     let fechaFormat=inicio[1]+"-"+inicio[0]+"-"+inicio[2]; 
 
     /* convertir la fecha de inicio al formato que acepta el backend*/
     let formatoCorrectoHoraInicio=this.parsearLaHora(this.horaInicio);
     let formatoCorrectoInicio=fechaFormat+" "+formatoCorrectoHoraInicio;
-    this.convocatoria.inicio=formatoCorrectoInicio;
+    this.evento.inicio=formatoCorrectoInicio;
 
 
     
     /* convertir la fecha de fin al formato correcto el backend*/
     let formatoCorrectoHoraFin=this.parsearLaHora(this.horaFin);
     let formatoCorrectoFin=fechaFormat+" "+formatoCorrectoHoraFin;
-    this.convocatoria.fin=formatoCorrectoFin;
+    this.evento.fin=formatoCorrectoFin;
 
 
      /*  Asignarle el inspector id del usuario logueado */
      let currentUser = this.authenticationService.currentUserValue;
-     this.convocatoria.inspectorId=currentUser.id;
+     this.evento.inspectorId=currentUser.id;
 
 
      
@@ -182,7 +182,7 @@ export class CargarEventosPage implements OnInit {
      console.log("formato correcto a enviar hora inicio",formatoCorrectoHoraInicio);
      console.log("formato correcto a enviar hora fin",formatoCorrectoHoraFin);
      console.log("formato correcto fin", formatoCorrectoFin)
-     console.log("convocatoria", this.convocatoria);
+     console.log("convocatoria", this.evento);
 
 
 
@@ -190,12 +190,12 @@ export class CargarEventosPage implements OnInit {
 
      if(this.validarHoras(formatoCorrectoHoraInicio,formatoCorrectoHoraFin)){
 
-          this.convocatoriaService.addConvocatoria(this.convocatoria).pipe(first())
+          this.convocatoriaService.addEvento(this.evento).pipe(first())
           .subscribe(
               data => {
                 
                 this.loading=false;
-                this.convocatoria = new Convocatoria();
+                this.evento = new Evento();
                 this.horaInicio;
                 this.horaFin;
                 this.error = '';
@@ -210,7 +210,7 @@ export class CargarEventosPage implements OnInit {
      }
      else{
         this.presentToast("la hora fin debe de ser mayor a la hora de inicio");
-        this.convocatoria.inicio=null;
+        this.evento.inicio=null;
      }
 
    
@@ -219,13 +219,13 @@ export class CargarEventosPage implements OnInit {
   }
 
    // TODO: Remove this when we're done
-  get diagnostic() { return JSON.stringify(this.convocatoria); }
+  get diagnostic() { return JSON.stringify(this.evento); }
 
 
 
   /****************************** TIPOS CONVOCATORIAS ************************************************************ */
 
-  filterPorts(tipos: TipoConvocatoria[], text: string) {
+  filterPorts(tipos: TipoEvento[], text: string) {
     return tipos.filter(t => {
       return t.descripcion.toLowerCase().indexOf(text) !== -1 ;
     });
@@ -242,9 +242,9 @@ export class CargarEventosPage implements OnInit {
     if (this.actividadesSubscription) {
       this.actividadesSubscription.unsubscribe();
     }
-    this.convocatoriaService.getTipoConvocatorias();
+    this.convocatoriaService.getTipoEventos();
 
-    this.actividadesSubscription = this.convocatoriaService.getTipoConvocatorias().subscribe(tipos => {
+    this.actividadesSubscription = this.convocatoriaService.getTipoEventos().subscribe(tipos => {
       // Subscription will be closed when unsubscribed manually.
      /* var tareas=JSON.parse(tipos._body);*/
      if (this.actividadesSubscription.closed) {

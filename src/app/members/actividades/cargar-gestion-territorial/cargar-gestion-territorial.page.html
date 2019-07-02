@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
-    <ion-title class="textoTitulo">Trabajo administrativo</ion-title>
+    <ion-title class="textoTitulo">Gesti&oacute;n territorial</ion-title>
   </ion-toolbar>
 </ion-header>
 <!--{{ diagnostic }}-->
@@ -12,11 +12,11 @@
     <ion-row>
       <ion-col>
 
-        <form #trabajoAdminForm="ngForm" (ngSubmit)="onSubmit()">
+        <form #gestionTerritorialForm="ngForm" (ngSubmit)="onSubmit()">
 
             <ion-item>
                 <ion-label position="stacked" class="textoBold" color="success">Fecha (*)</ion-label>
-                <ion-input [(ngModel)]="trabajoAdmin.inicio" 
+                <ion-input [(ngModel)]="gestionTerritorial.inicio" 
                            [liIonic4Datepicker]="datePickerObj" 
                            name="inicio" 
                            #inicio="ngModel" required> </ion-input>
@@ -57,8 +57,8 @@
               <ion-label position="stacked" class="espacioright" color="success">Tipo (*)</ion-label>
               <ionic-selectable class="fuente"
                 item-content
-                [(ngModel)]="trabajoAdmin.tipoTrabajoAdmin"
-                name="trabajoAdminTipo"
+                [(ngModel)]="gestionTerritorial.tipoGestionTerritorial"
+                name="gestionTerritorialTipo"
                 itemValueField="codigo"
                 itemTextField="descripcion"
                 [items]="tiposTrabajos"
@@ -79,8 +79,8 @@
               <ion-label position="stacked" class="textoBold" color="success">Distrito (*)</ion-label>
               <ionic-selectable class="fuente"
                 item-content
-                [(ngModel)]="trabajoAdmin.distrito"
-                name="trabajoAdminDistrito"
+                [(ngModel)]="gestionTerritorial.distrito"
+                name="gestionTerritorialDistrito"
                 itemValueField="numero"
                 itemTextField="descripcion"
                 [items]="distritos"
@@ -102,7 +102,7 @@
 
             <ion-item>
               <ion-label position="stacked" class="textoBold" color="success">Observaciones</ion-label>
-              <ion-input class="fuente" type="text"  name="observaciones" [(ngModel)]="trabajoAdmin.observaciones" #observaciones="ngModel"></ion-input>
+              <ion-input class="fuente" type="text"  name="observaciones" [(ngModel)]="gestionTerritorial.observaciones" #observaciones="ngModel"></ion-input>
             </ion-item>
 
 
@@ -149,9 +149,9 @@
           <hr>
 
             <ion-fab horizontal="end" >
-              <ion-fab-button color="tertiary" [disabled]="!(trabajoAdminForm.form.valid  && !horasNoValidas) ">
+              <ion-fab-button color="tertiary" [disabled]="!(gestionTerritorialForm.form.valid  && !horasNoValidas) ">
                   <ion-icon name="checkmark" style="position: absolute;left: 32%; text-align: center"></ion-icon> 
-                  <ion-button fill="clear" class="centerGroup" type="submit" [disabled]="!(trabajoAdminForm.form.valid  && !horasNoValidas)" color="tertiary">
+                  <ion-button fill="clear" class="centerGroup" type="submit" [disabled]="!(gestionTerritorialForm.form.valid  && !horasNoValidas)" color="tertiary">
                </ion-button>
               </ion-fab-button>
             </ion-fab> 
@@ -159,7 +159,7 @@
            
             <!--<ion-fab vertical="bottom" horizontal="end" >
                 <ion-fab-button color="tertiary">
-              <ion-button type="submit" [disabled]="!trabajoAdminForm.form.valid" color="tertiary">
+              <ion-button type="submit" [disabled]="!gestionTerritorialForm.form.valid" color="tertiary">
                     <ion-icon    name="checkmark"></ion-icon>
               </ion-button>
             </ion-fab-button>

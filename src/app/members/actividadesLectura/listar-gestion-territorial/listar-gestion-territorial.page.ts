@@ -22,7 +22,7 @@ import { FileOpener } from '@ionic-native/file-opener/ngx';
 
 
 /*  MODELOS */
-import { TrabajoAdministrativo } from 'src/app/_models/trabajo-administrativo';
+import { GestionTerritorial } from 'src/app/_models/gestion-territorial';
 
 @Component({
   selector: 'app-listar-gestion-territorial',
@@ -93,7 +93,7 @@ export class ListarGestionTerritorialPage implements OnInit {
     console.log("creacion del listar trabajos admin");
     let currentUser = this.authenticationService.currentUserValue;
     this.inspectorId= currentUser.id;
-    this.trabajosService.getTrabajoAdministrativo(this.size,this.page,this.inspectorId)
+    this.trabajosService.getGestionTerritorial(this.size,this.page,this.inspectorId)
     .subscribe(res  =>{
                  if(res!=null){
                   console.log("resultados",res);
@@ -110,7 +110,7 @@ export class ListarGestionTerritorialPage implements OnInit {
                );
     this.tipoFiltro="Todos.";
 
-    this.trabajosService.getTipoTrabajoAdministrativo().subscribe(
+    this.trabajosService.getTipoGestionTerritorial().subscribe(
       tipos=>{
           this.tiposTrabajos=tipos;
           this.tiposTrabajos.unshift({codigo: 0, descripcion: "Todos."})
@@ -154,7 +154,7 @@ export class ListarGestionTerritorialPage implements OnInit {
     let diaFin = this.finFiltro.split("-");
     let formatoCorrectoFin = diaFin[0]+"/"+diaFin[1]+"/"+diaFin[2];
     if(this.tipoFiltro=="Todos."){
-          this.trabajosService.getTrabajoAdministrativoByDate(this.size,page,this.inspectorId, formatoCorrectoInicio, formatoCorrectoFin)
+          this.trabajosService.getGestionTerritorialByDate(this.size,page,this.inspectorId, formatoCorrectoInicio, formatoCorrectoFin)
           .subscribe(res  =>{
                           if(res!=null){
                             this.trabajosAdmin=this.trabajosAdmin.concat(res['content']);
@@ -175,7 +175,7 @@ export class ListarGestionTerritorialPage implements OnInit {
     else{
 
         console.log("cargar un trabajo con tipo", this.tipoFiltro);
-        this.trabajosService.getTrabajoAdministrativoByDateAndTipo(this.size,page,this.inspectorId, formatoCorrectoInicio, formatoCorrectoFin,this.tipoFiltro)
+        this.trabajosService.getGestionTerritorialByDateAndTipo(this.size,page,this.inspectorId, formatoCorrectoInicio, formatoCorrectoFin,this.tipoFiltro)
         .subscribe(res  =>{
                       if(res!=null){
                         this.trabajosAdmin=this.trabajosAdmin.concat(res['content']);
@@ -202,7 +202,7 @@ export class ListarGestionTerritorialPage implements OnInit {
 
     if(this.tipoFiltro=="Todos."){
       console.log("cargar todos los trabajos");
-          this.trabajosService.getTrabajoAdministrativo(this.size,page,this.inspectorId)
+          this.trabajosService.getGestionTerritorial(this.size,page,this.inspectorId)
           .subscribe(res  =>{
                           if(res!=null){
                             this.trabajosAdmin=this.trabajosAdmin.concat(res['content']);
@@ -221,7 +221,7 @@ export class ListarGestionTerritorialPage implements OnInit {
     }
     else{
           console.log("cargar un tipo de trabajo", this.tipoFiltro);
-          this.trabajosService.getTrabajoAdministrativoByTipo(this.size,page,this.inspectorId, this.tipoFiltro)
+          this.trabajosService.getGestionTerritorialByTipo(this.size,page,this.inspectorId, this.tipoFiltro)
               .subscribe(res  =>{
                           if(res!=null){
                             this.trabajosAdmin=this.trabajosAdmin.concat(res['content']);
@@ -344,11 +344,11 @@ export class ListarGestionTerritorialPage implements OnInit {
       tipoAEntregar=this.tipoFiltro;
     }
   
-    return this.trabajosService.getTrabajosBySize(this.inspectorId, formatoCorrectoInicio, formatoCorrectoFin, tipoAEntregar,1000,0);
+    return this.trabajosService.getGestionTerritorialBySize(this.inspectorId, formatoCorrectoInicio, formatoCorrectoFin, tipoAEntregar,1000,0);
   
   }
 
-  armarPDF(convocatoriasAllenar: Array<TrabajoAdministrativo>){
+  armarPDF(convocatoriasAllenar: Array<GestionTerritorial>){
     let contenidoArmadoDelPDF=[];
     let currentUser = this.authenticationService.currentUserValue;
     let inspector= currentUser.nombre+" "+currentUser.apellido;
@@ -361,7 +361,7 @@ export class ListarGestionTerritorialPage implements OnInit {
       let contenidoDelTrabajoAdmin=[];
       var formatoInicio=this.formatoHoraPDF(trabajoAdmin.inicio);
       var formatoFin=this.formatoHoraPDF(trabajoAdmin.fin);
-      contenidoDelTrabajoAdmin.push(formatoInicio, formatoFin, trabajoAdmin.tipoTrabajoAdmin.descripcion, trabajoAdmin.distrito.descripcion, trabajoAdmin.observaciones);
+      contenidoDelTrabajoAdmin.push(formatoInicio, formatoFin, trabajoAdmin.tipoGestionTerritorial.descripcion, trabajoAdmin.distrito.descripcion, trabajoAdmin.observaciones);
       contenidoArmadoDelPDF.push(contenidoDelTrabajoAdmin);
     });
 

@@ -11,11 +11,11 @@
   <ion-grid>
     <ion-row>
       <ion-col>
-        <form  #convocatoriaForm="ngForm" (ngSubmit)="onSubmit()">
+        <form  #eventoForm="ngForm" (ngSubmit)="onSubmit()">
 
             <ion-item>
                 <ion-label position="stacked" class="textoBold" color="success">Fecha (*)</ion-label>
-                <ion-input [(ngModel)]="convocatoria.inicio" [liIonic4Datepicker]="datePickerObj" name="nuevaFecha" #nuevaFecha="ngModel" required> </ion-input>
+                <ion-input [(ngModel)]="evento.inicio" [liIonic4Datepicker]="datePickerObj" name="nuevaFecha" #nuevaFecha="ngModel" required> </ion-input>
                 <div *ngIf="!(nuevaFecha.valid || nuevaFecha.pristine)" class="invalid-feedback">
                     La fecha de inicio es requerida
                 </div>
@@ -49,16 +49,16 @@
 
 
           <ion-item class="paddingcheck">
-                <ion-label position="stacked" class="espacioright" color="success">Tipo de convocatoria (*)</ion-label>
+                <ion-label position="stacked" class="espacioright" color="success">Tipo de evento (*)</ion-label>
                 <ionic-selectable class="fuente"
                     item-content
-                    [(ngModel)]="convocatoria.tipoConvocatoria"
-                    name="convocatoriaTipo"
+                    [(ngModel)]="evento.tipoEvento"
+                    name="eventoTipo"
                     itemValueField="codigo"
                     itemTextField="descripcion"
                     [items]="tiposTrabajos"
                     [canSearch]="true"
-                    searchPlaceholder="buscar tipo convocatoria"
+                    searchPlaceholder="buscar tipo evento"
                     [searchFailText]="'No hay resultados.'"
                     (onSearch)="searchPorts($event)"
                     required>
@@ -73,8 +73,8 @@
                 <ion-label position="stacked" class="textoBold" color="success">Distrito (*)</ion-label>
                 <ionic-selectable class="fuente"
                     item-content
-                    [(ngModel)]="convocatoria.distrito"
-                    name="convocatoriaDistrito"
+                    [(ngModel)]="evento.distrito"
+                    name="eventoDistrito"
                     itemValueField="numero"
                     itemTextField="descripcion"
                     [items]="distritos"
@@ -93,8 +93,8 @@
           </ion-item>
 
           <ion-item>
-                <ion-label position="stacked" class="textoBold" color="success">Lugar de la convocatoria</ion-label>
-                <ion-input class="fuente" type="text" [(ngModel)]="convocatoria.lugar" name="lugar" #lugar="ngModel"></ion-input>
+                <ion-label position="stacked" class="textoBold" color="success">Lugar del evento</ion-label>
+                <ion-input class="fuente" type="text" [(ngModel)]="evento.lugar" name="lugar" #lugar="ngModel"></ion-input>
         </ion-item>
 
 
@@ -146,9 +146,9 @@
 
 
             <ion-fab horizontal="end" >
-              <ion-fab-button color="tertiary" [disabled]="!(convocatoriaForm.form.valid  && !horasNoValidas)">
+              <ion-fab-button color="tertiary" [disabled]="!(eventoForm.form.valid  && !horasNoValidas)">
                 <ion-icon name="checkmark" style="position: absolute;left: 32%; text-align: center"></ion-icon>
-                <ion-button fill="clear" class="centerGroup" type="submit" [disabled]="!(convocatoriaForm.form.valid  && !horasNoValidas)" color="tertiary">
+                <ion-button fill="clear" class="centerGroup" type="submit" [disabled]="!(eventoForm.form.valid  && !horasNoValidas)" color="tertiary">
                 </ion-button>
               </ion-fab-button>
             </ion-fab> 
@@ -156,7 +156,7 @@
             
           
            <!-- <ion-fab vertical="bottom" horizontal="end" >
-              <ion-fab-button type="submit" [disabled]="!convocatoriaForm.form.valid" color="tertiary">
+              <ion-fab-button type="submit" [disabled]="!eventoForm.form.valid" color="tertiary">
                     <ion-icon name="checkmark"></ion-icon>
               </ion-fab-button>
              </ion-fab> --> 

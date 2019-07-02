@@ -1,4 +1,4 @@
-export class TipoConvocatoria {
+export class TipoEvento {
     id: number;
     codigo: number;
     descripcion: string;

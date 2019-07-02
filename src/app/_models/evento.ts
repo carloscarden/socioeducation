@@ -1,9 +1,18 @@
+import { TipoEvento } from "./tipo-evento";
+import { Imagen } from "./imagen";
+import { Distrito } from "./distrito";
 
-import { Actividad } from "./actividad";
+
 
 export class Evento {
-    tipo:Actividad;
-    inicio: string;
-    fin: string;
-    allDay: Boolean;
+    id:number;
+    inicio:string;
+    fin:string;
+    tipoEvento: TipoEvento;
+    distrito: Distrito;
+    lugar: string;
+    inspectorId:number;
+    adjuntos:Array<Imagen>;
+
 }
+

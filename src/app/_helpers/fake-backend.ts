@@ -14,11 +14,11 @@ import { Calendario } from '../_models/calendario';
 /* TAREAS DEL INSPECTOR */
 import { Licencia } from '../_models/licencia';
 
-import { Convocatoria } from '../_models/convocatoria';
-import { TipoConvocatoria } from '../_models/tipo-convocatoria';
+import { Evento } from '../_models/evento';
+import { TipoEvento } from '../_models/tipo-evento';
 
-import { TrabajoAdministrativo } from '../_models/trabajo-administrativo';
-import { TipoTrabajoAdministrativo } from '../_models/tipo-trabajo-administrativo';
+import { GestionTerritorial } from '../_models/gestion-territorial';
+import { TipoGestionTerritorial } from '../_models/tipo-gestion-territorial';
 
 
 
@@ -187,15 +187,15 @@ export class FakeBackend implements HttpInterceptor{
 
       ];
     
-    private trabajosAdministrativosCollection:TrabajoAdministrativo[]=[];
-    private tiposTrabajosAdministrativoCollection:TipoTrabajoAdministrativo[]=[
+    private trabajosAdministrativosCollection:GestionTerritorial[]=[];
+    private tiposTrabajosAdministrativoCollection:TipoGestionTerritorial[]=[
       {id:1,codigo:1,descripcion:"lalal"},
       {id:2,codigo:2,descripcion:"lalal"},
       {id:3, codigo:3,descripcion:"lalal"},
       {id:4, codigo:4,descripcion:"lalal"}];
 
-    private convocatoriaCollection: Convocatoria[] =[]; 
-    private tipoConvocatoriaCollection:TipoConvocatoria[]=[
+    private convocatoriaCollection: Evento[] =[]; 
+    private tipoEventoCollection:TipoEvento[]=[
       { id: 1,
         codigo: 1,
         descripcion: "Plenario"},
@@ -371,7 +371,7 @@ export class FakeBackend implements HttpInterceptor{
              // tipos convocatoria
              if (request.url.endsWith('/members/tipoConvocatorias') && request.method === 'GET') {
               if (!isLoggedIn) return unauthorised();
-              return ok(this.tipoConvocatoriaCollection);
+              return ok(this.tipoEventoCollection);
             }
 
             /* ***************************************************************************** */

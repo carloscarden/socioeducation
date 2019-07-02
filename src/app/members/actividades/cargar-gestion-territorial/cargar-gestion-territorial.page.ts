@@ -12,8 +12,8 @@ import { ImagenService } from '../../../_services/imagen.service';
 
 
 /* MODELOS */
-import { TipoTrabajoAdministrativo } from '../../../_models/tipo-trabajo-administrativo';
-import { TrabajoAdministrativo } from  '../../../_models/trabajo-administrativo';
+import { TipoGestionTerritorial } from '../../../_models/tipo-gestion-territorial';
+import { GestionTerritorial } from  '../../../_models/gestion-territorial';
 import { Imagen } from '../../../_models/imagen';
 
 
@@ -29,8 +29,8 @@ import { Distrito } from 'src/app/_models/distrito';
   styleUrls: ['./cargar-gestion-territorial.page.scss'],
 })
 export class CargarGestionTerritorialPage implements OnInit {
-  trabajoAdmin = new TrabajoAdministrativo();
-  tiposTrabajosAdministrativos: TipoTrabajoAdministrativo[];
+  gestionTerritorial = new GestionTerritorial();
+  tiposTrabajosAdministrativos: TipoGestionTerritorial[];
   actividadesSubscription: Subscription;
   
   
@@ -128,13 +128,13 @@ export class CargarGestionTerritorialPage implements OnInit {
       imgsConvertidas.push(img);
     }
     this.imagesWeb=[];
-    this.trabajoAdmin.adjuntos=imgsConvertidas;
+    this.gestionTerritorial.adjuntos=imgsConvertidas;
 
 
     
 
     /* formato correcto del dia mes y año */
-    let inicio=this.trabajoAdmin.inicio.split("-");
+    let inicio=this.gestionTerritorial.inicio.split("-");
     let fechaFormat=inicio[1]+"-"+inicio[0]+"-"+inicio[2]; 
 
 
@@ -143,13 +143,13 @@ export class CargarGestionTerritorialPage implements OnInit {
     /* convertir la fecha de inicio al formato que acepta el backend*/
     let formatoCorrectoHoraInicio=this.parsearLaHora(this.horaInicio);
     let formatoCorrectoInicio=fechaFormat+" "+formatoCorrectoHoraInicio;
-    this.trabajoAdmin.inicio=formatoCorrectoInicio;
+    this.gestionTerritorial.inicio=formatoCorrectoInicio;
 
 
     /* convertir la fecha de fin al formato correcto el backend*/
     let formatoCorrectoHoraFin=this.parsearLaHora(this.horaFin);
     let formatoCorrectoFin=fechaFormat+" "+formatoCorrectoHoraFin;
-    this.trabajoAdmin.fin=formatoCorrectoFin;
+    this.gestionTerritorial.fin=formatoCorrectoFin;
 
     
 
@@ -157,16 +157,16 @@ export class CargarGestionTerritorialPage implements OnInit {
    
    /*  Asignarle el inspector id del usuario logueado */
    let currentUser = this.authenticationService.currentUserValue;
-    this.trabajoAdmin.inspectorId=currentUser.id;
+    this.gestionTerritorial.inspectorId=currentUser.id;
 
-    console.log(this.trabajoAdmin);
+    console.log(this.gestionTerritorial);
 
     if(this.validarHoras(formatoCorrectoHoraInicio,formatoCorrectoHoraFin)){
-          this.gestionTerritorialService.addTrabajoAdministrativo(this.trabajoAdmin).pipe(first())
+          this.gestionTerritorialService.addGestionTerritorial(this.gestionTerritorial).pipe(first())
           .subscribe(
               data => {
                 this.loading=false;
-                this.trabajoAdmin = new TrabajoAdministrativo();
+                this.gestionTerritorial = new GestionTerritorial();
                 this.horaInicio;
                 this.horaFin;
                 this.error = '';
@@ -181,19 +181,19 @@ export class CargarGestionTerritorialPage implements OnInit {
     }
     else{
       this.presentToast("la hora fin debe de ser mayor a la hora de inicio");
-      this.trabajoAdmin.inicio=null;
+      this.gestionTerritorial.inicio=null;
    }
     
   
   }
 
   // TODO: Remove this when we're done
-  get diagnostic() { return JSON.stringify(this.trabajoAdmin); }
+  get diagnostic() { return JSON.stringify(this.gestionTerritorial); }
 
 
   /********************************************************************************* */
 
-  filterPorts(tipos: TipoTrabajoAdministrativo[], text: string) {
+  filterPorts(tipos: TipoGestionTerritorial[], text: string) {
     return tipos.filter(t => {
       return t.descripcion.toLowerCase().indexOf(text) !== -1 ;
     });
@@ -211,7 +211,7 @@ export class CargarGestionTerritorialPage implements OnInit {
       this.actividadesSubscription.unsubscribe();
     }
 
-    this.actividadesSubscription = this.gestionTerritorialService.getTipoTrabajoAdministrativo().subscribe(tipos => {
+    this.actividadesSubscription = this.gestionTerritorialService.getTipoGestionTerritorial().subscribe(tipos => {
       // Subscription will be closed when unsubscribed manually.
       console.log("tipos");
       console.log("tipos",tipos);

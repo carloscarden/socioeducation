@@ -1,14 +1,14 @@
-import { TipoTrabajoAdministrativo } from "./tipo-trabajo-administrativo";
+import { TipoGestionTerritorial } from "./tipo-gestion-territorial";
 import { Imagen } from "./imagen";
 import { Distrito } from "./distrito";
 
 
-export class TrabajoAdministrativo {
+export class GestionTerritorial {
     inicio:string;
     fin:string;
     observaciones: string;
     distrito: Distrito;
-    tipoTrabajoAdmin: TipoTrabajoAdministrativo;
+    tipoGestionTerritorial: TipoGestionTerritorial;
     adjuntos:Array<Imagen>;
     inspectorId:number;
 

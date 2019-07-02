@@ -8,7 +8,7 @@ import { Observable, of } from 'rxjs';
 import 'rxjs/add/observable/fromPromise';
 
 
-import { TrabajoAdministrativo } from '../_models/trabajo-administrativo';
+import { GestionTerritorial } from '../_models/gestion-territorial';
 import { Platform } from '@ionic/angular'
 
 const URL = `http://test2.abc.gov.ar:8080/InspectoresAppSec/`;
@@ -29,7 +29,7 @@ export class GestionTerritorialService {
         }
   }
 
-  getAllTrabajos(idInspector, inicio, fin, codigo){
+  getAllGestionTerritorial(idInspector, inicio, fin, codigo){
 
    let urlAenviar = URL+`inspectores/${idInspector}/trabajosAdmin`;
 
@@ -53,7 +53,7 @@ export class GestionTerritorialService {
 
   }
 
-  getTrabajosBySize(idInspector, inicio, fin, articulo,size,page): Observable<any>{
+  getGestionTerritorialBySize(idInspector, inicio, fin, articulo,size,page): Observable<any>{
 
    if(articulo==null && inicio==null && fin==null){
       // buscar trabajo admin sin articulo ni fecha
@@ -80,11 +80,11 @@ export class GestionTerritorialService {
 
    /******************************************************************************** */
    /*  TRABAJO ADMINISTRATIVO */
-   addTrabajoAdministrativo(trabajoAdmin: TrabajoAdministrativo){
+   addGestionTerritorial(trabajoAdmin: GestionTerritorial){
       return this.http.post<any>(URL+`trabajosAdmin`,  trabajoAdmin );
    }
       
-   getTrabajoAdministrativo(size,page,idInspector): Observable<any>{
+   getGestionTerritorial(size,page,idInspector): Observable<any>{
       /* console.log("url");
       console.log(URL+`trabajosAdmin?size=${size}&page=${page}`);*/
       return this.http.get<any>(URL+`inspectores/${idInspector}/trabajosAdmin?size=${size}&page=${page}`);
@@ -92,19 +92,19 @@ export class GestionTerritorialService {
 
    
       
-   getTrabajoAdministrativoByDate(size,page,idInspector, inicio, fin): Observable<any>{
+   getGestionTerritorialByDate(size,page,idInspector, inicio, fin): Observable<any>{
       /* console.log("url");
       console.log(URL+`trabajosAdmin?size=${size}&page=${page}`);*/
       return this.http.get<any>(URL+`inspectores/${idInspector}/trabajosAdmin?from=${inicio}&to=${fin}&size=${size}&page=${page}`);
    }
 
-   getTrabajoAdministrativoByTipo(size,page,idInspector,tipo){
+   getGestionTerritorialByTipo(size,page,idInspector,tipo){
       console.log(URL+`inspectores/${idInspector}/trabajosAdmin?tipo=${tipo}&size=${size}&page=${page}`);
       return this.http.get<any>(URL+`inspectores/${idInspector}/trabajosAdmin?codigo=${tipo}&size=${size}&page=${page}`);
 
    }
 
-   getTrabajoAdministrativoByDateAndTipo(size,page,idInspector,inicio,fin,tipo){
+   getGestionTerritorialByDateAndTipo(size,page,idInspector,inicio,fin,tipo){
       console.log(URL+`inspectores/${idInspector}/trabajosAdmin?codigo=${tipo}&from=${inicio}&to=${fin}&size=${size}&page=${page}`);
       return this.http.get<any>(URL+`inspectores/${idInspector}/trabajosAdmin?codigo=${tipo}&from=${inicio}&to=${fin}&size=${size}&page=${page}`);
  
@@ -116,7 +116,7 @@ export class GestionTerritorialService {
       return this.http.get<any>(URL+`inspectores/${idInspector}/trabajosAdmin/${idTrabajoAdmin}`);
    }
       
-   getTipoTrabajoAdministrativo(): Observable<any>{
+   getTipoGestionTerritorial(): Observable<any>{
       return this.http.get(URL+`tiposTrabajoAdmin/all`);
    }
    /******************************************************************************** */

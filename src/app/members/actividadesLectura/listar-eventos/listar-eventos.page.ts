@@ -4,7 +4,7 @@ import {  Platform } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 
 /*  SERVICES */
-import { ConvocatoriaServiceService } from '../../../_services/convocatoria-service.service';
+import { EventoServiceService } from '../../../_services/evento-service.service';
 import { AuthenticationService } from '../../../_services/authentication.service';
 
 
@@ -14,7 +14,7 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 import { File } from '@ionic-native/file/ngx';
 import { FileOpener } from '@ionic-native/file-opener/ngx';
-import { Convocatoria } from 'src/app/_models/convocatoria';
+import { Evento } from 'src/app/_models/evento';
 
 
 
@@ -87,7 +87,7 @@ export class ListarEventosPage implements OnInit {
   tiposConvocatoria;
 
   constructor(
-              private convocatoriaService: ConvocatoriaServiceService,
+              private convocatoriaService: EventoServiceService,
               private authenticationService: AuthenticationService,
               private file:File,
               private fileOpener: FileOpener,
@@ -98,7 +98,7 @@ export class ListarEventosPage implements OnInit {
                 let currentUser = this.authenticationService.currentUserValue;
                 this.idInspector= currentUser.id;
                 this.tipoFiltro="Todos.";
-                this.convocatoriaService.getConvocatorias(this.size,this.page, this.idInspector)
+                this.convocatoriaService.getEventos(this.size,this.page, this.idInspector)
                 .subscribe(res  =>{
                              if(res!=null){
                               this.convocatorias=res.content;
@@ -112,7 +112,7 @@ export class ListarEventosPage implements OnInit {
                             }  
                            );
 
-              this.convocatoriaService.getTipoConvocatorias()
+              this.convocatoriaService.getTipoEventos()
                       .subscribe(tipos => {
                         console.log("tipos",tipos);
                         this.tiposConvocatoria=tipos;
@@ -163,7 +163,7 @@ export class ListarEventosPage implements OnInit {
     let formatoCorrectoFin = diaFin[0]+"/"+diaFin[1]+"/"+diaFin[2];
 
     if(this.tipoFiltro=="Todos."){
-          this.convocatoriaService.getConvocatoriasByDate(this.size,page,this.idInspector, formatoCorrectoInicio, formatoCorrectoFin)
+          this.convocatoriaService.getEventosByDate(this.size,page,this.idInspector, formatoCorrectoInicio, formatoCorrectoFin)
           .subscribe(res  =>{
                       if(res!=null){
                         this.convocatorias=this.convocatorias.concat(res['content']);
@@ -182,7 +182,7 @@ export class ListarEventosPage implements OnInit {
                     });
     }
     else{
-          this.convocatoriaService.getConvocatoriasByArticuloAndDate(this.size,page,this.idInspector, formatoCorrectoInicio, formatoCorrectoFin,this.tipoFiltro)
+          this.convocatoriaService.getEventosByArticuloAndDate(this.size,page,this.idInspector, formatoCorrectoInicio, formatoCorrectoFin,this.tipoFiltro)
           .subscribe(res  =>{
 
                       if(res!=null){
@@ -216,7 +216,7 @@ export class ListarEventosPage implements OnInit {
 
              console.log("cargar convocatorias todas", this.tipoFiltro)
 
-            this.convocatoriaService.getConvocatorias(this.size,page, this.idInspector)
+            this.convocatoriaService.getEventos(this.size,page, this.idInspector)
             .subscribe(res  =>{
                         if(res!=null){
                             console.log("resultados de cargar todas las convocatorias");
@@ -237,7 +237,7 @@ export class ListarEventosPage implements OnInit {
     }
     else{
            console.log("cargar convocatorias por tipo", this.tipoFiltro)
-            this.convocatoriaService.getConvocatoriasByArticulo(this.size,page, this.idInspector, this.tipoFiltro)
+            this.convocatoriaService.getEventosByArticulo(this.size,page, this.idInspector, this.tipoFiltro)
             .subscribe(res  =>{
                         if(res!=null){
                           console.log("resultados de cargar por tipo", res);
@@ -389,14 +389,14 @@ export class ListarEventosPage implements OnInit {
     }
     console.log("filtrado",filtrado );
   
-    return this.convocatoriaService.getConvocatoriasBySize(this.idInspector, formatoCorrectoInicio, formatoCorrectoFin, filtrado, 100,0)
+    return this.convocatoriaService.getEventosBySize(this.idInspector, formatoCorrectoInicio, formatoCorrectoFin, filtrado, 100,0)
    
 
 
     
   }
 
-  armarPDF(convocatoriasAllenar: Array<Convocatoria>){
+  armarPDF(convocatoriasAllenar: Array<Evento>){
 
     let contenidoArmadoDelPDF=[];
     let currentUser = this.authenticationService.currentUserValue;
@@ -409,7 +409,7 @@ export class ListarEventosPage implements OnInit {
       let contenidoDeLaLicencia=[];
       var formatoInicio=this.formatoHoraPDF(convocatoria.inicio);
       var formatoFin=this.formatoHoraPDF(convocatoria.fin);
-      contenidoDeLaLicencia.push(formatoInicio, formatoFin, convocatoria.tipoConvocatoria.descripcion, convocatoria.distrito.descripcion, convocatoria.lugar);
+      contenidoDeLaLicencia.push(formatoInicio, formatoFin, convocatoria.tipoEvento.descripcion, convocatoria.distrito.descripcion, convocatoria.lugar);
       contenidoArmadoDelPDF.push(contenidoDeLaLicencia);
     });
 
